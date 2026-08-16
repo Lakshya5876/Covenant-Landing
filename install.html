@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Setup — Covenant</title>
-  <meta name="description" content="Clone Covenant, run the installer, initialize governance. The full setup for engineers on the Board." />
+  <meta name="description" content="Clone Covenant, run the installer, initialize governance, and let it read your repository before it writes a single rule. The full setup for engineers on the Board." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="color-scheme" content="dark" />
 </head>
@@ -118,7 +118,13 @@
                 <code>/init-governance</code>
                 <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
               </div>
-              <p class="step__note">Interrogates you about your stack, drafts governance docs for your explicit approval, then generates a repo-specific <code>CLAUDE.md</code> and the enforcement hooks. Nothing is written without you signing off first.</p>
+              <p class="step__note">
+                <strong>Brownfield:</strong> reads your repo end to end — stack, architecture, conventions,
+                debt — and shows you a discovery report before writing anything. <strong>Greenfield:</strong>
+                asks six rounds of questions about the product, stack, and risk posture, then drafts a PRD,
+                schema, and architecture doc for your approval. Either way, nothing lands until you sign off
+                — then it generates a repo-specific <code>CLAUDE.md</code> and the enforcement hooks.
+              </p>
             </div>
           </div>
 
@@ -151,7 +157,7 @@
         </svg>
         <span class="brand__word">Covenant</span>
       </div>
-      <p class="site-footer__tagline">Deterministic git+CI governance for AI-assisted development.</p>
+      <p class="site-footer__tagline">Structure, repository context, and independent git+CI verification for AI-assisted development.</p>
       <div class="site-footer__links">
         <a href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">Source ↗</a>
         <a href="/board.html">The Board</a>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Setup — Covenant</title>
+  <meta name="description" content="Clone Covenant, run the installer, initialize governance. The full setup for engineers on the Board." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="color-scheme" content="dark" />
+</head>
+<body class="board-page">
+  <a class="skip-link" href="#install-main">Skip to content</a>
+
+  <header class="board-page-header">
+    <div class="wrap board-page-header__inner">
+      <a class="brand" href="/" aria-label="Covenant, home">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+        <span class="brand__word">Covenant</span>
+      </a>
+      <div class="board-page-header__actions">
+        <button class="board-reset" type="button" data-board-reset title="Forget this browser's saved seat and fill the form again">Reset</button>
+        <a class="board-back" href="/">← Back to the site</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="install-main">
+    <section class="install-hero">
+      <div class="wrap install-hero__inner">
+        <div class="install-hero__identity" data-identity hidden>
+          <img data-identity-avatar alt="" width="52" height="52" />
+          <p>Welcome, <span data-identity-username></span> — you're on the board.</p>
+        </div>
+        <p class="eyebrow eyebrow--mark">// start governed</p>
+        <h1>Covenant lives beside your project, never inside it.</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="sibling-diagram reveal" aria-label="Directory layout">
+          <div class="sibling-diagram__tree">
+            <pre class="sibling-diagram__pre">projects/
+├── your-project/   <span class="sibling-diagram__tag">the repo you're governing</span>
+└── Covenant/       <span class="sibling-diagram__tag sibling-diagram__tag--seal">cloned once, installs into any repo beside it</span>
+    ├── CovenantMac/
+    └── CovenantWin/</pre>
+          </div>
+          <p class="sibling-diagram__note">One clone. Install into as many repos as you govern — Covenant is never copied into any of them.</p>
+        </div>
+
+        <div class="install-steps reveal">
+          <div class="step">
+            <span class="step__n">1</span>
+            <div class="step__body">
+              <h3>Clone Covenant next to your project</h3>
+              <div class="code-copy" data-copy>
+                <code>git clone https://github.com/Lakshya5876/Covenant.git</code>
+                <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="step__n">2</span>
+            <div class="step__body">
+              <h3>Enter your project and run the installer</h3>
+              <div class="tabs" data-tabs>
+                <div class="tabs__list" role="tablist" aria-label="Platform">
+                  <button class="tabs__btn is-active" role="tab" aria-selected="true" type="button" data-tab="mac">macOS / Linux</button>
+                  <button class="tabs__btn" role="tab" aria-selected="false" type="button" data-tab="win">Windows</button>
+                </div>
+                <div class="tabs__panel" data-tab-panel="mac">
+                  <div class="code-copy" data-copy>
+                    <code>cd your-project<br>../Covenant/CovenantMac/install.sh</code>
+                    <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
+                  </div>
+                </div>
+                <div class="tabs__panel" data-tab-panel="win" hidden>
+                  <div class="code-copy" data-copy>
+                    <code>Set-Location your-project<br>&amp; '..\Covenant\CovenantWin\install.ps1'</code>
+                    <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="basket-prompt">
+                <p class="basket-prompt__label">The installer asks one question — real prompt, verbatim:</p>
+                <pre class="basket-prompt__pre">Which type of repository is this?
+  [g] Greenfield — new project, no prior history
+  [b] Brownfield — existing repository with code</pre>
+                <div class="basket-cards">
+                  <div class="basket-card">
+                    <h4>Greenfield</h4>
+                    <p>Zero tolerance from commit one. Scaffolds a four-layer architecture — domain, application, infrastructure, presentation.</p>
+                  </div>
+                  <div class="basket-card">
+                    <h4>Brownfield</h4>
+                    <p>Maps your repo, freezes existing debt into a baseline, and enforces that debt can only shrink. Certified to 1M LOC.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="step__n">3</span>
+            <div class="step__body">
+              <h3>Open Claude Code and initialize</h3>
+              <div class="code-copy" data-copy>
+                <code>claude</code>
+                <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
+              </div>
+              <div class="code-copy" data-copy>
+                <code>/init-governance</code>
+                <button type="button" data-copy-btn aria-label="Copy command">Copy</button>
+              </div>
+              <p class="step__note">Interrogates you about your stack, drafts governance docs for your explicit approval, then generates a repo-specific <code>CLAUDE.md</code> and the enforcement hooks. Nothing is written without you signing off first.</p>
+            </div>
+          </div>
+
+          <div class="step step--required">
+            <span class="step__n">!</span>
+            <div class="step__body">
+              <h3>The one step the installer can't do for you</h3>
+              <p>
+                Edit <code>.github/CODEOWNERS</code> to name a real reviewer, then turn on
+                <strong>"Require review from Code Owners"</strong> under branch protection, in
+                GitHub's settings. Until that's on, every control this installs is local-only.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="install-footer reveal">
+          <button class="btn btn--ghost" type="button" data-copy-all>Copy the full setup</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div class="site-footer__brand">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/>
+        </svg>
+        <span class="brand__word">Covenant</span>
+      </div>
+      <p class="site-footer__tagline">Deterministic git+CI governance for AI-assisted development.</p>
+      <div class="site-footer__links">
+        <a href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">Source ↗</a>
+        <a href="/board.html">The Board</a>
+        <span>MIT License</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/install.ts"></script>
+</body>
+</html>

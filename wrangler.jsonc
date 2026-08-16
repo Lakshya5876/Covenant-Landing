@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "covenant-landing",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2025-01-01",
+
+  // database_id is a resource pointer, not a credential — Cloudflare's own
+  // getting-started docs commit it in wrangler.jsonc with no secrecy
+  // warning. Querying this database requires an actual Cloudflare API
+  // token/OAuth session on the account that owns it; the ID alone grants
+  // nothing. Safe to push to a public repo.
+  //
+  // Local dev still works unaffected: `wrangler pages dev` runs D1 against
+  // a local SQLite file regardless of this ID (never touches the remote
+  // database unless you pass --remote).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "covenant-board",
+      "database_id": "b50a1ef8-54ae-421a-9a7d-86857a4247ac",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Board — Covenant</title>
+  <meta name="description" content="Every engineer who's actually run Covenant, in one place. Join the board to unlock the install commands." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="color-scheme" content="dark" />
+</head>
+<body class="board-page">
+  <a class="skip-link" href="#board-main">Skip to content</a>
+
+  <header class="board-page-header">
+    <div class="wrap board-page-header__inner">
+      <a class="brand" href="/" aria-label="Covenant, home">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+        <span class="brand__word">Covenant</span>
+      </a>
+      <div class="board-page-header__actions">
+        <button class="board-reset" type="button" data-board-reset title="Forget this browser's saved seat and fill the form again">Reset</button>
+        <a class="board-back" href="/">← Back to the site</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="board-main">
+    <section class="board-hero">
+      <div class="board-burst" aria-hidden="true"></div>
+      <div class="wrap board-hero__inner">
+        <p class="eyebrow board-eyebrow">The Board</p>
+        <h1>Every engineer who's actually run Covenant. In one place.</h1>
+
+        <div class="board-count-big">
+          <span class="board-count-big__num" data-board-count-num>—</span>
+          <span class="board-count-big__label">on the board</span>
+        </div>
+
+        <button class="btn btn--board btn--lg" type="button" data-open-join>Join the Board →</button>
+        <p class="board-hero__note">20 seconds. No repo access, no code access. Unlocks the install commands.</p>
+
+        <div class="board-recent" data-board-recent hidden>
+          <p class="board-recent__label">Just joined</p>
+          <div class="board-recent__strip" data-recent-strip></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="join-panel" data-join-panel hidden aria-labelledby="join-heading">
+      <div class="wrap join-panel__inner">
+        <h2 id="join-heading">Pick a face. Claim a seat.</h2>
+        <form data-join-form novalidate>
+          <div class="field">
+            <label for="jf-username">Username</label>
+            <input id="jf-username" name="username" type="text" maxlength="40" required placeholder="shipfast_kay" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="jf-email">Email</label>
+            <input id="jf-email" name="email" type="email" required placeholder="you@wherever.dev" autocomplete="email" />
+            <p class="field__hint">Never shown publicly. Used only to keep one seat per person.</p>
+          </div>
+          <div class="field">
+            <p class="field__label">Choose your avatar</p>
+            <div class="avatar-grid" data-avatar-grid role="listbox" aria-label="Avatar"></div>
+          </div>
+          <button type="submit" class="btn btn--board btn--lg join-submit" data-join-submit>Join the Board</button>
+          <p class="form-error" data-form-error hidden role="alert"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/board.ts"></script>
+</body>
+</html>

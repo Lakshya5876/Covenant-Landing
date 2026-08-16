@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Covenant — deterministic git+CI governance for AI-assisted development</title>
+  <meta name="description" content="An agent can be talked out of a rule. It can't talk its way past an exit code. Covenant turns CLAUDE.md from a suggestion into a mechanical gate — the same checks for a human's diff and an agent's." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="color-scheme" content="dark" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="wrap site-header__inner">
+      <a class="brand" href="#top" aria-label="Covenant, home">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+        <span class="brand__word">Covenant</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#enforcement">Enforcement</a>
+        <a href="#trust">What it doesn't solve</a>
+        <a href="#board">The Board</a>
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="link-source" href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          <span>Source</span>
+        </a>
+        <a class="btn btn--sm btn--board" href="/board.html">Join the Board</a>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-nav-toggle>
+        <span></span><span></span><span></span>
+        <span class="sr-only">Menu</span>
+      </button>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" data-mobile-nav aria-label="Mobile">
+      <a href="#enforcement">Enforcement</a>
+      <a href="#trust">What it doesn't solve</a>
+      <a href="#board">The Board</a>
+      <a href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">Source ↗</a>
+      <a href="/board.html" class="mobile-nav__cta">Join the Board</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         THE HOOK — a real terminal, auto-playing, no buttons to press.
+         ============================================================ -->
+    <section class="hook" id="top">
+      <div class="hook__grain" aria-hidden="true"></div>
+      <div class="wrap hook__inner">
+        <div class="hook__copy">
+          <p class="eyebrow hook__eyebrow">Git + CI governance for AI‑assisted development</p>
+          <h1 class="hook__title">Your AI agent is about to leak a production secret.</h1>
+        </div>
+
+        <div class="hook__term">
+          <div class="term term--hook" data-term="hook">
+            <div class="term__bar">
+              <span class="term__dot term__dot--r"></span><span class="term__dot term__dot--y"></span><span class="term__dot term__dot--g"></span>
+              <span class="term__title">billing-service — feature/billing-fix</span>
+            </div>
+            <pre class="term__body term__body--hook" data-term-body tabindex="0" aria-label="Live terminal demonstration"></pre>
+            <button class="term__replay" type="button" data-term-replay="hook" hidden>Watch it again</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHAT JUST HAPPENED — short, sharp explanation.
+         ============================================================ -->
+    <section class="explain" id="explain">
+      <div class="wrap explain__inner">
+        <p class="explain__eyebrow">// what just happened</p>
+        <h2 class="explain__title">
+          An agent can be talked out of a rule.<br>It can't talk its way past an <em>exit code.</em>
+        </h2>
+        <p class="explain__body">
+          Nothing read that diff. A grep pattern matched a layer it isn't allowed to touch, and the
+          exit code did the rest — no model, no judgment call, no negotiation. <code>CLAUDE.md</code>
+          can tell an agent the rules. It can't make the agent follow them under pressure to ship.
+        </p>
+        <p class="explain__strong">Covenant doesn't make the rule more convincing. It stops asking the agent to agree with it.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         THE GATE — mechanism, compressed with latches for depth.
+         ============================================================ -->
+    <section class="section section--mechanism" id="mechanism">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <p class="eyebrow eyebrow--mark">// the gate</p>
+          <h2>The rule doesn't live in the prompt. It lives in the exit code.</h2>
+          <p class="section__head-sub">
+            Three layers. The same <code>covenant.sh</code> runs the last two, so they can't drift.
+          </p>
+        </div>
+
+        <ol class="layers reveal">
+          <li class="layers__item">
+            <div class="layers__head">
+              <div class="layers__index">01</div>
+              <div>
+                <h3>Claude Code hooks <span class="layers__tag">agent-side, advisory</span></h3>
+                <p class="layers__summary">Watches the agent as it works. Not the part anyone should trust.</p>
+              </div>
+              <button class="latch" type="button" aria-expanded="false" data-latch>
+                <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+                <span class="sr-only">Expand</span>
+              </button>
+            </div>
+            <div class="latch__panel" data-latch-panel hidden>
+              <p><code>PreToolUse</code>/<code>PostToolUse</code>/<code>Stop</code> hooks — a Bash guard blocks shell
+              commands that touch governance files before they run, a freshness check keeps the code
+              graph honest. This layer hardens the agent against disarming itself.</p>
+            </div>
+          </li>
+
+          <li class="layers__item">
+            <div class="layers__head">
+              <div class="layers__index">02</div>
+              <div>
+                <h3>git hooks <span class="layers__tag">the enforcement boundary</span></h3>
+                <p class="layers__summary">Where a human commit and an agent commit are checked identically.</p>
+              </div>
+              <button class="latch" type="button" aria-expanded="false" data-latch>
+                <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+                <span class="sr-only">Expand</span>
+              </button>
+            </div>
+            <div class="latch__panel" data-latch-panel hidden>
+              <p><code>pre-commit</code> and <code>pre-push</code> exec the same <code>covenant.sh</code> — branch
+              guard, secrets scan, layer-boundary scan, lint/type/complexity, tests. Locally bypassable
+              — <code>--no-verify</code> exists — which is exactly why layer three exists.</p>
+            </div>
+          </li>
+
+          <li class="layers__item">
+            <div class="layers__head">
+              <div class="layers__index">03</div>
+              <div>
+                <h3>CI <span class="layers__tag">the authoritative backstop</span></h3>
+                <p class="layers__summary">Re-runs everything, regardless of what happened on the developer's machine.</p>
+              </div>
+              <button class="latch" type="button" aria-expanded="false" data-latch>
+                <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+                <span class="sr-only">Expand</span>
+              </button>
+            </div>
+            <div class="latch__panel" data-latch-panel hidden>
+              <p><code>.github/workflows/covenant.yml</code> re-runs <code>covenant.sh</code> on every PR.
+              Un-bypassable once CODEOWNERS and branch protection are switched on — a human-owned
+              GitHub setting the installer cannot flip for you. See <a href="#trust">what this doesn't
+              solve</a>.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         THE CLAUSES — compact, scannable, interactive.
+         ============================================================ -->
+    <section class="section" id="enforcement">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <p class="eyebrow eyebrow--mark">// the clauses</p>
+          <h2>Eight checks. The same eight, whoever wrote the diff.</h2>
+          <p class="section__head-sub">Scoped to changed files only — not the whole tree.</p>
+        </div>
+
+        <div class="clause-grid reveal">
+          <div class="clause"><span class="clause__n">01</span><h3>Protected branch</h3><p>No direct commits to <code>main</code>, <code>master</code>, <code>develop</code>.</p></div>
+          <div class="clause"><span class="clause__n">02</span><h3>Secrets scan</h3><p>Keyword, credential prefix, and PEM-header matching on the staged diff.</p></div>
+          <div class="clause"><span class="clause__n">03</span><h3>Layer boundary</h3><p>No SQL in routes/services. No framework imports in the domain layer.</p></div>
+          <div class="clause"><span class="clause__n">04</span><h3>Lint · type · complexity</h3><p>A debt ratchet grandfathers existing findings, blocks only new ones.</p></div>
+          <div class="clause"><span class="clause__n">05</span><h3>Tests + coverage</h3><p>Opt-in at commit. Mandatory at push, in CI, and on architecture-critical files.</p></div>
+          <div class="clause"><span class="clause__n">06</span><h3>Token budget</h3><p>Blocks an active agent session at 100%. Never blocks a human commit.</p></div>
+          <div class="clause"><span class="clause__n">07</span><h3>Receipts</h3><p>A tree that already passed can skip re-checking at push.</p></div>
+          <div class="clause"><span class="clause__n">08</span><h3>Audited bypass</h3><p><code>SKIP_COVENANT=1</code> demands a reason, logs it, opens a 24h clock.</p></div>
+        </div>
+
+        <div class="speed-note reveal">
+          <div class="speed-note__stat">
+            <span class="speed-note__num">1–3s</span>
+            <span class="speed-note__label">a clean commit, end to end</span>
+          </div>
+          <div class="speed-note__body">
+            <p>The obvious worry: does governance make every commit slow? No — checks are scoped to
+            changed files, and tests are opt-in at commit (mandatory only at push, in CI, or when an
+            architecture-critical file is touched). That timing is from Covenant's own docs, not a
+            marketing estimate.</p>
+            <button class="latch latch--inline" type="button" aria-expanded="false" data-latch>
+              <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+              <span class="latch__label">See the per-step timing</span>
+            </button>
+            <div class="latch__panel latch__panel--table" data-latch-panel hidden>
+              <table>
+                <tbody>
+                  <tr><th scope="row">Branch check</th><td>&lt; 0.1s</td></tr>
+                  <tr><th scope="row">Secrets scan</th><td>&lt; 0.5s</td></tr>
+                  <tr><th scope="row">Layer boundary</th><td>&lt; 0.2s</td></tr>
+                  <tr><th scope="row">Lint</th><td>~1–3s</td></tr>
+                  <tr><th scope="row">Type check</th><td>~1–3s</td></tr>
+                  <tr><th scope="row">Complexity</th><td>&lt; 1s</td></tr>
+                  <tr><th scope="row">Tests (if run)</th><td>varies — opt-in at commit</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         THE BOARD — the conversion moment.
+         ============================================================ -->
+    <section class="section section--board" id="board">
+      <div class="board-burst" aria-hidden="true"></div>
+      <div class="wrap board-wrap">
+        <p class="eyebrow board-eyebrow">// the board</p>
+        <h2 class="board-h2">Everyone who's actually run this, in one place.</h2>
+        <p class="board-sub">
+          Pick a face. Claim a seat. The install commands are right there waiting for you —
+          the Board is what unlocks them.
+        </p>
+
+        <div class="board-teaser reveal">
+          <div class="board-teaser__count">
+            <span class="board-teaser__num" data-landing-count>—</span>
+            <span class="board-teaser__label">engineers on the board</span>
+          </div>
+          <a class="btn btn--board btn--lg" href="/board.html">Join the Board →</a>
+          <p class="board-teaser__note">20 seconds. No repo access, no code access — just a face and a name.</p>
+        </div>
+
+        <div class="board-faces" aria-hidden="true">
+          <img src="/avatars/avatar-03.png" alt="" loading="lazy"><img src="/avatars/avatar-17.png" alt="" loading="lazy">
+          <img src="/avatars/avatar-10.png" alt="" loading="lazy"><img src="/avatars/avatar-22.png" alt="" loading="lazy">
+          <img src="/avatars/avatar-15.png" alt="" loading="lazy"><img src="/avatars/avatar-28.png" alt="" loading="lazy">
+          <img src="/avatars/avatar-07.png" alt="" loading="lazy"><img src="/avatars/avatar-25.png" alt="" loading="lazy">
+        </div>
+        <p class="board-faces__caption">30 faces to choose from. Yours isn't taken yet.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         THE TRUST ROOT
+         ============================================================ -->
+    <section class="section section--root">
+      <div class="wrap section__grid">
+        <div class="section__head reveal">
+          <p class="eyebrow eyebrow--mark">// the trust root</p>
+          <h2>An agent that can rewrite its own rules has no rules.</h2>
+          <p>
+            So the files that define them are locked three independent ways: a deny-list the agent's
+            own tools refuse to write to, a Bash guard that inspects the actual command text before it
+            runs, and a SHA-256 manifest CI checks on every commit. The manifest alone only proves
+            internal consistency — the real anchor is CODEOWNERS and branch
+            protection, a human decision, on purpose.
+          </p>
+        </div>
+
+        <div class="seal-manifest reveal">
+          <div class="seal-manifest__head">
+            <svg class="seal-manifest__mark" viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="20" cy="20" r="14.5" fill="none" stroke="currentColor" stroke-width="0.6"/>
+              <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+            </svg>
+            <div>
+              <p class="seal-manifest__title">.claude/covenant_integrity.sha256</p>
+              <p class="seal-manifest__sub">7 files, one hash — verified by CI on every commit</p>
+            </div>
+          </div>
+          <button class="latch latch--inline" type="button" aria-expanded="false" data-latch>
+            <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+            <span class="latch__label">Inspect the manifest</span>
+          </button>
+          <div class="latch__panel" data-latch-panel hidden>
+            <ul class="seal-manifest__list">
+              <li><code>.githooks/covenant.sh</code></li>
+              <li><code>.githooks/pre-commit</code></li>
+              <li><code>.githooks/pre-push</code></li>
+              <li><code>.githooks/verify_governance_integrity.sh</code></li>
+              <li><code>.claude/hooks/pre_bash_trust_root_guard.sh</code></li>
+              <li><code>.claude/hooks/graph_freshness_check.py</code></li>
+              <li><code>.claude/checkpoint_tool.py</code></li>
+            </ul>
+            <a class="seal-manifest__link" href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">Read the real script on GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHAT THIS DOESN'T SOLVE
+         ============================================================ -->
+    <section class="section section--honest" id="trust">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <p class="eyebrow eyebrow--mark">// what this doesn't solve</p>
+          <h2>A tool that only tells you what it catches is marketing.</h2>
+          <p class="section__head-sub">Disclosed in the same repository that enforces the rules, cited to the line.</p>
+        </div>
+
+        <div class="limits reveal">
+          <div class="limits__item">
+            <h3>Local hooks are bypassable.</h3>
+            <p>A stripped <code>.githooks/</code> or a plain <code>--no-verify</code> gets past the local covenant. CI, not the developer's machine, is the actual backstop.</p>
+          </div>
+          <div class="limits__item">
+            <h3>The integrity manifest has no external anchor.</h3>
+            <p>A single PR can edit <code>covenant.sh</code> and regenerate its own SHA-256 pin to match. Closing that needs CODEOWNERS and branch protection — a human step the installer cannot do for you.</p>
+          </div>
+          <div class="limits__item">
+            <h3>The secrets scan is shape-based, not entropy-based.</h3>
+            <p>It catches a keyword near a value, or a known prefix like <code>sk_live_</code>. An opaque token with no recognizable shape gets through. Run gitleaks or trufflehog alongside it.</p>
+          </div>
+        </div>
+
+        <button class="latch latch--inline" type="button" aria-expanded="false" data-latch>
+          <svg class="latch__glyph" viewBox="0 0 16 16" aria-hidden="true"><path class="latch__staple" d="M3.5 9.5h9"/><g class="latch__hook"><path d="M5.5 9.5V6.5a2.5 2.5 0 0 1 5 0v3"/></g></svg>
+          <span class="latch__label">Show three more limits</span>
+        </button>
+        <div class="latch__panel" data-latch-panel hidden>
+          <div class="limits">
+            <div class="limits__item">
+              <h3>Agent detection is a client-side signal.</h3>
+              <p><code>$CLAUDECODE</code> and process ancestry identify a cooperating agent. One that strips its own environment before running a command defeats both. Closes accidental detachment, not deliberate evasion.</p>
+            </div>
+            <div class="limits__item">
+              <h3>The layer-boundary check is grep, not an import graph.</h3>
+              <p>A re-export shim — a module that quietly imports the banned framework on your behalf — still gets through. Resolving that needs AST/import-graph analysis, not a regex.</p>
+            </div>
+            <div class="limits__item">
+              <h3>The token budget is a deterrent, not a central control.</h3>
+              <p>It lives in a local, per-machine file. A developer with shell access can raise their own ceiling. It stops a runaway loop — it isn't SOC 2 CC6.6 on its own.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-table reveal" aria-label="Platform support">
+          <table>
+            <caption>Platform status</caption>
+            <thead>
+              <tr><th scope="col"></th><th scope="col">macOS / Linux</th><th scope="col">Windows</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Mechanical enforcement</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row"><code>/init-governance</code></th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Trust-root lockdown</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Debt ratchet (brownfield)</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Bypass audit trail</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">CI backstop</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Test depth</th><td>158 bats tests / 30 files</td><td>27 pytest tests</td></tr>
+            </tbody>
+          </table>
+          <p class="platform-table__note">CovenantMac needs WSL2 if you want <code>covenant.sh</code> itself on Windows — CovenantWin is the native path, a separate Python/PowerShell implementation at governance-generation parity.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div class="site-footer__brand">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M12 20.5 L17.5 26 L28.5 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/>
+        </svg>
+        <span class="brand__word">Covenant</span>
+      </div>
+      <p class="site-footer__tagline">Deterministic git+CI governance for AI-assisted development.</p>
+      <div class="site-footer__links">
+        <a href="https://github.com/Lakshya5876/Covenant" target="_blank" rel="noopener">Source ↗</a>
+        <a href="/board.html">The Board</a>
+        <span>MIT License</span>
+      </div>
+      <p class="site-footer__closing">Zero network calls at covenant time. This page won't start now either.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -18,44 +18,75 @@ const MAX_EMAIL_LEN = 120;
 // so an attacker can't spend our CPU (or D1, further down) on multi-MB junk.
 const MAX_BODY_BYTES = 4096;
 
-// One join attempt per IP per window. The Origin check below only catches
-// browsers — any direct scripted client (curl, requests, a bot) just omits
-// Origin entirely and sails through it, hitting D1 on every request. IP is
-// the only thing here a caller can't opt out of or spoof: CF-Connecting-IP
-// is set by Cloudflare's edge from the real TCP connection, not read from
-// anything the client sends, so it can't be forged by header manipulation
-// the way Origin effectively can (a script can just omit it; it can't
-// substitute a different source IP for its own request).
+// One join attempt per (deployment host, IP) per window. The Origin check
+// below only catches browsers — any direct scripted client (curl, requests,
+// a bot) just omits Origin entirely and sails through it, hitting D1 on
+// every request. IP is the only thing here a caller can't opt out of or
+// spoof: CF-Connecting-IP is set by Cloudflare's edge from the real TCP
+// connection, not read from anything the client sends, so it can't be
+// forged by header manipulation the way Origin effectively can (a script
+// can just omit it; it can't substitute a different source IP for its own
+// request).
 //
 // Implemented with the same Cache API already used by count.ts/members.ts —
-// no KV, no Durable Objects, no new Cloudflare resource or paid feature.
-// It's a best-effort, per-Cloudflare-PoP limiter (the cache isn't globally
-// consistent), not a hard global guarantee — but it turns "unlimited D1 hits
-// per second from one source" into "at most one every RATE_LIMIT_WINDOW_
-// SECONDS, per PoP that source's traffic lands on," which is the actual
-// cost driver worth bounding here.
+// no KV, no Durable Objects, no new Cloudflare resource or paid feature —
+// and deliberately NOT made atomic: `cache.match` then `cache.put` is a
+// plain check-then-act with no lock or compare-and-swap. Two requests from
+// the same IP that both read the cache before either write lands can both
+// be admitted. This is a best-effort, per-Cloudflare-PoP throttle on
+// *sustained sequential* abuse from one source — not a hard cap on
+// simultaneous concurrent requests, and not an exact or globally-consistent
+// enforcement (the cache itself isn't replicated across every PoP).
 const RATE_LIMIT_WINDOW_SECONDS = 10;
 
 function bad(message: string, status = 400) {
   return Response.json({ ok: false, error: message }, { status });
 }
 
-async function isRateLimited(ip: string): Promise<boolean> {
-  const cache = caches.default;
-  // Synthetic same-origin key — this is never a real route, just a place to
-  // hang a per-IP marker in the shared edge cache.
-  const key = new Request(`https://rate-limit.internal/join/${encodeURIComponent(ip)}`);
-
-  if (await cache.match(key)) return true;
-
-  // Awaited, not waitUntil'd: the whole point is that the NEXT request from
-  // this IP sees the marker, so the write needs to be underway before this
-  // request finishes, not deferred after the response is already sent.
-  await cache.put(
-    key,
-    new Response('1', { headers: { 'Cache-Control': `public, max-age=${RATE_LIMIT_WINDOW_SECONDS}` } })
+// Used whenever we can't safely establish whether a request should be rate
+// limited — no CF-Connecting-IP to key on, or the Cache API itself errored.
+// Fails CLOSED: deny the request rather than silently letting unthrottled
+// traffic reach D1 just because the check couldn't run.
+function unavailable() {
+  return Response.json(
+    { ok: false, error: 'Could not process your request right now. Try again shortly.' },
+    { status: 503, headers: { 'Retry-After': String(RATE_LIMIT_WINDOW_SECONDS) } }
   );
-  return false;
+}
+
+type RateLimitCheck = 'allowed' | 'limited' | 'unavailable';
+
+async function checkRateLimit(host: string, ip: string): Promise<RateLimitCheck> {
+  const cache = caches.default;
+  // Synthetic same-origin key — never a real route, just a place to hang a
+  // per-(host, IP) marker in the shared edge cache. Host is included, the
+  // same way count.ts/members.ts key their own caches off the real request
+  // URL, so a preview/branch deployment and production can't accidentally
+  // pool rate-limit state if they turn out to share the underlying cache.
+  const key = new Request(
+    `https://rate-limit.internal/join/${encodeURIComponent(host)}/${encodeURIComponent(ip)}`
+  );
+
+  let hit: Response | undefined;
+  try {
+    hit = await cache.match(key);
+  } catch {
+    return 'unavailable';
+  }
+  if (hit) return 'limited';
+
+  try {
+    // Awaited, not waitUntil'd: the whole point is that the NEXT request from
+    // this IP sees the marker, so the write needs to be underway before this
+    // request finishes, not deferred after the response is already sent.
+    await cache.put(
+      key,
+      new Response('1', { headers: { 'Cache-Control': `public, max-age=${RATE_LIMIT_WINDOW_SECONDS}` } })
+    );
+  } catch {
+    return 'unavailable';
+  }
+  return 'allowed';
 }
 
 export const onRequestPost: PagesFunction<Env> = async (ctx) => {
@@ -69,7 +100,14 @@ export const onRequestPost: PagesFunction<Env> = async (ctx) => {
   // work (including the Origin check, which a direct scripted client would
   // sail past anyway by omitting Origin).
   const ip = ctx.request.headers.get('CF-Connecting-IP');
-  if (ip && (await isRateLimited(ip))) {
+  if (!ip) {
+    return unavailable();
+  }
+  const rateLimit = await checkRateLimit(new URL(ctx.request.url).host, ip);
+  if (rateLimit === 'unavailable') {
+    return unavailable();
+  }
+  if (rateLimit === 'limited') {
     return Response.json(
       { ok: false, error: 'Too many requests. Try again in a few seconds.' },
       { status: 429, headers: { 'Retry-After': String(RATE_LIMIT_WINDOW_SECONDS) } }

@@ -1,7 +1,6 @@
 import './style.css';
 import {
   prefersReducedMotion,
-  escapeHtml,
   setupCopyButtons,
   setupTabs,
   animateCount,
@@ -10,6 +9,7 @@ import {
   BOARD_IDENTITY_KEY as IDENTITY_KEY,
 } from './shared';
 import { AVATARS, avatarUrl } from './avatars';
+import { renderMemberAvatar } from './board-render';
 
 setupTabs();
 setupCopyButtons();
@@ -39,13 +39,7 @@ async function loadRecent() {
     const res = await fetch('/api/board/members');
     const data = (await res.json()) as { members: { username: string; avatar_id: string }[] };
     if (!data.members.length) return;
-    strip.innerHTML = data.members
-      .slice(0, 12)
-      .map(
-        (m) =>
-          `<img src="${avatarUrl(m.avatar_id)}" alt="${escapeHtml(m.username)}" width="40" height="40" loading="lazy">`
-      )
-      .join('');
+    strip.replaceChildren(...data.members.slice(0, 12).map(renderMemberAvatar));
     wrap.hidden = false;
   } catch {
     /* no recent strip — fine, it's decoration */
@@ -114,7 +108,6 @@ setupAvatarPicker();
    ============================================================ */
 interface JoinResponse {
   ok: boolean;
-  count?: number;
   error?: string;
 }
 

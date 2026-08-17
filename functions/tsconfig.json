@@ -3,7 +3,7 @@
     "target": "ES2021",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2021", "WebWorker"],
+    "lib": ["ES2021"],
     "types": ["@cloudflare/workers-types"],
     "strict": true,
     "noUnusedLocals": true,
